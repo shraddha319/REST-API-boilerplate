@@ -1,23 +1,31 @@
 const mongoose = require('mongoose');
+const {
+  validateDOB,
+  validateUniqueField,
+} = require('../middleware/validateUserRegistration');
 
 const userSchema = mongoose.Schema({
   email: {
     type: String,
-    required: true,
-    unique: true,
+    required: [true, 'Email is a required field.'],
   },
   password: {
     type: String,
-    required: true,
+    required: [true, 'Password is a required field.'],
+    minLength: [8, 'Password must be atleast 8 characters long.'],
   },
   firstName: {
     type: String,
-    required: true,
+    required: [true, 'First name is a required field.'],
   },
   lastName: { type: String },
   DOB: {
     type: Date,
-    required: true,
+    required: [true, 'Date Of Birth is required.'],
+    validate: {
+      validator: validateDOB,
+      message: 'User must be atleast 13 years of age.',
+    },
   },
 });
 
@@ -30,5 +38,13 @@ const userSchema = mongoose.Schema({
  */
 
 const User = mongoose.model('User', userSchema);
+
+userSchema
+  .path('email')
+  .validate(validateUniqueField('email', 'User'), '{VALUE} already exists');
+
+userSchema
+  .path('firstName')
+  .validate(validateUniqueField('firstName', 'User'), '{VALUE} already exists');
 
 module.exports = { User, userSchema };
