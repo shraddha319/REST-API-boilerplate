@@ -1,3 +1,6 @@
+const { User } = require('../models/user.model');
+const { ApplicationError } = require('../lib/index');
+
 const validateUserId = async (req, res, next) => {
   const { userId } = req.params;
   const user = await User.findById(userId);
