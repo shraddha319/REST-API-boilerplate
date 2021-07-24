@@ -1,10 +1,11 @@
-const { ApplicationError } = require('../lib/index');
+const { ApplicationError, ErrorTypes } = require('../lib/index');
+
+const { RESOURCE_NOT_FOUND } = ErrorTypes;
 
 const notFoundHandler = (req, res, next) => {
-  const err = new ApplicationError(
-    `can't find ${req.originalUrl} on server`,
-    404,
-  );
+  const err = new ApplicationError(RESOURCE_NOT_FOUND, {
+    message: `can't find ${req.originalUrl} on server`,
+  });
   next(err);
 };
 
