@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const {
   validateDOB,
   validateUniqueField,
 } = require('../middleware/validateUserRegistration');
+const { SALT_WORK_FACTOR } = require('../config');
 
 const userSchema = mongoose.Schema({
   email: {
@@ -37,8 +39,6 @@ const userSchema = mongoose.Schema({
  * DOB - age above 13
  */
 
-const User = mongoose.model('User', userSchema);
-
 userSchema
   .path('email')
   .validate(validateUniqueField('email', 'User'), '{VALUE} already exists');
@@ -46,5 +46,18 @@ userSchema
 userSchema
   .path('firstName')
   .validate(validateUniqueField('firstName', 'User'), '{VALUE} already exists');
+
+userSchema.post('validate', async (user, next) => {
+  if (!user.isModified('password')) return next();
+  const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
+  user.password = await bcrypt.hash(user.password, salt);
+  return next();
+});
+
+/**
+ * DO NOT MOVE
+ * .model() must be called after adding everything to schema, including hooks
+ */
+const User = mongoose.model('User', userSchema);
 
 module.exports = { User, userSchema };
