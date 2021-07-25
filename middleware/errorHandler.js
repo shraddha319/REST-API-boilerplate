@@ -1,4 +1,5 @@
-const { ApplicationError, createError } = require('../lib/index');
+const { ApplicationError, createError, sendResponse } = require('../lib/index');
+const { NODE_ENV } = require('../config');
 
 const errorHandler = (err, req, res, next) => {
   // if (err instanceof mongoose.Error.ValidationError) {
@@ -26,11 +27,16 @@ const errorHandler = (err, req, res, next) => {
   // });
   let error;
   if (!(err instanceof ApplicationError)) error = createError(err);
-  else error = { ...err };
+  else {
+    error = { ...err };
+    error.message = err.message;
+    if (NODE_ENV === 'production') error.stack = err.stack;
+  }
 
-  res.status(error.statusCode).json({
+  return sendResponse({
+    res,
     success: false,
-    error,
+    payload: error,
   });
 };
 
