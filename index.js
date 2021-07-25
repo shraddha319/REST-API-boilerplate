@@ -7,6 +7,7 @@ const { connectDB } = require('./lib/index');
 const errorHandler = require('./middleware/errorHandler');
 const notFoundHandler = require('./middleware/notFoundHandler');
 const userRouter = require('./routes/user.routes');
+const authRouter = require('./routes/auth.routes');
 
 connectDB();
 
@@ -19,6 +20,7 @@ app.get('/', (req, res) => {
   res.send('Hello, world!');
 });
 
+app.use('/auth', authRouter);
 app.use('/user', userRouter);
 
 /**
