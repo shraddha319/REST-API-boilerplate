@@ -5,11 +5,16 @@ const {
   sendResponse,
   ErrorTypes,
   ApplicationError,
+  generateToken,
 } = require('../lib/index');
 const { User } = require('../models/user.model');
 
 const router = express.Router();
-const { INVALID_PARAMETERS, AUTHENTICATION_ERROR } = ErrorTypes;
+const {
+  INVALID_PARAMETERS,
+  AUTHENTICATION_ERROR,
+  RESOURCE_NOT_FOUND,
+} = ErrorTypes;
 
 router.route('/login').post(
   catchAsync(async (req, res, next) => {
@@ -22,10 +27,24 @@ router.route('/login').post(
       );
 
     const user = await User.findOne({ email });
+
+    if (!user)
+      return next(
+        new ApplicationError(RESOURCE_NOT_FOUND, {
+          message: 'User does not exist.',
+        }),
+      );
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return next(new ApplicationError(AUTHENTICATION_ERROR));
     /** generate jwt token */
-    return sendResponse({ res, success: true, payload: { user } });
+    const authToken = generateToken({ userId: user._id, email: user.email });
+
+    return sendResponse({
+      res,
+      success: true,
+      payload: { userID: user._id, authToken },
+    });
   }),
 );
 
