@@ -30,13 +30,15 @@ const errorHandler = (err, req, res, next) => {
   else {
     error = { ...err };
     error.message = err.message;
-    if (NODE_ENV === 'production') error.stack = err.stack;
   }
+
+  if (NODE_ENV === 'production') error.stack = err.stack;
 
   return sendResponse({
     res,
     success: false,
     payload: error,
+    statusCode: error.statusCode,
   });
 };
 
