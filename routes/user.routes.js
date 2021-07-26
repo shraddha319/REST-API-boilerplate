@@ -2,6 +2,7 @@
 const express = require('express');
 const { catchAsync } = require('../lib/index');
 const validateUserId = require('../middleware/validateUserId');
+const tokenVerifier = require('../middleware/tokenVerifier');
 const {
   postNewUser,
   getUserById,
@@ -13,7 +14,7 @@ const router = express.Router();
 
 router.route('/').post(catchAsync(postNewUser));
 
-router.use('/:userId', catchAsync(validateUserId));
+router.use('/:userId', catchAsync(validateUserId), tokenVerifier);
 
 router
   .route('/:userId')
