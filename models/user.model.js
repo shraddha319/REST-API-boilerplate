@@ -43,10 +43,6 @@ userSchema
   .path('email')
   .validate(validateUniqueField('email', 'User'), '{VALUE} already exists');
 
-userSchema
-  .path('firstName')
-  .validate(validateUniqueField('firstName', 'User'), '{VALUE} already exists');
-
 userSchema.post('validate', async (user, next) => {
   if (!user.isModified('password')) return next();
   const salt = await bcrypt.genSalt(Number(SALT_WORK_FACTOR));
