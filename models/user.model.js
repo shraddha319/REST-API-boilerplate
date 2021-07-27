@@ -49,7 +49,7 @@ userSchema
 
 userSchema.post('validate', async (user, next) => {
   if (!user.isModified('password')) return next();
-  const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
+  const salt = await bcrypt.genSalt(Number(SALT_WORK_FACTOR));
   user.password = await bcrypt.hash(user.password, salt);
   return next();
 });
