@@ -39,9 +39,11 @@ const userSchema = mongoose.Schema({
  * DOB - age above 13
  */
 
-userSchema
-  .path('email')
-  .validate(validateUniqueField('email', 'User'), '{VALUE} already exists');
+userSchema.path('email').validate({
+  validator: validateUniqueField('email', 'User'),
+  message: '{VALUE} already exists',
+  type: 'unique',
+});
 
 userSchema.post('validate', async (user, next) => {
   if (!user.isModified('password')) return next();
