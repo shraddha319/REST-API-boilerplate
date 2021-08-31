@@ -34,4 +34,78 @@ components:
     Error:
       type: object
       properties:
-        success: string
+        message:
+          type: string
+        name:
+          type: string
+        statusCode:
+          type: number
+        code:
+          type: string
+
+  responses:
+    ValidationError:
+      description: Error in validating data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 'VALIDATION_ERROR'
+            statusCode: 400
+            message: 'Email already exists'
+
+    InvalidParameters:
+      description: Paramters are invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 'INVALID_PARAMETERS'
+            statusCode: 400
+            message: 'Parameters are invalid.'
+
+    AuthenticationError:
+      description: User authentication failed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 'AUTHENTICATION_ERROR'
+            statusCode: 401
+            message: 'User authentication failed.'
+
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 'UNAUTHORIZED'
+            statusCode: 403
+            message: 'User is not authorized.'
+
+    NotFound:
+      description: Resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 'RESOURCE_NOT_FOUND'
+            statusCode: 404
+            message: 'Resource not found'
+
+    ServerError:
+      description: Server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 'SERVER_ERROR'
+            statusCode: 500
+            message: 'Something went wrong. Please try again later'
