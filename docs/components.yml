@@ -1,0 +1,37 @@
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - email
+        - password
+        - firstName
+        - DOB
+      properties:
+        _id:
+          type: string
+          description: Auto-generated user ID
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          description: User's password. Must be atleast 8 characters long.
+        firstName:
+          type: string
+        lastName:
+          type: string
+        DOB:
+          type: string
+          description: User's date of birth. Must be in yyyy-mm-dd format.
+
+    AuthToken:
+      type: object
+      properties:
+        token:
+          type: string
+
+    Error:
+      type: object
+      properties:
+        success: string
