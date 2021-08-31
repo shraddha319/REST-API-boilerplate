@@ -6,7 +6,7 @@ const {
   ErrorTypes,
   ApplicationError,
   generateToken,
-} = require('../lib/index');
+} = require('../lib');
 const { User } = require('../models/user.model');
 
 const router = express.Router();
