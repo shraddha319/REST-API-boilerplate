@@ -4,10 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "start": "nodemon --watch index.js",
-    "lint": "./node_modules/.bin/eslint index.js"
+    "test": "jest --maxWorkers=1",
+    "test:coverage": "jest --maxWorkers=1 --coverage",
+    "test:watch": "jest --watch --maxWorkers=1",
+    "dev": "nodemon --delay 500ms --watch index.js",
+    "start": "node index.js",
+    "clean": "kill -9 $(lsof -t -i:3000)",
+    "lint": "./node_modules/.bin/eslint index.js",
+    "lint:fix": "./node_modules/.bin/eslint index.js"
   },
   "repository": {
     "type": "git",
@@ -28,7 +32,9 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
-    "mongoose": "^5.13.2"
+    "mongoose": "^5.13.2",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {
     "eslint": "^7.31.0",
