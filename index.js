@@ -2,26 +2,27 @@ require('dotenv').config();
 
 const express = require('express');
 const { json } = require('body-parser');
-const { PORT } = require('./config');
-const { connectDB } = require('./lib/index');
+
+const { PORT, NODE_ENV } = require('./config');
+const { connectDB } = require('./lib');
 const errorHandler = require('./middleware/errorHandler');
 const notFoundHandler = require('./middleware/notFoundHandler');
 const userRouter = require('./routes/user.routes');
 const authRouter = require('./routes/auth.routes');
+const docsRouter = require('./routes/docs.routes');
 
-connectDB();
+if (NODE_ENV !== 'test') connectDB();
 
 const app = express();
-const port = PORT || 3000;
-
-app.use(json());
 
 app.get('/', (req, res) => {
-  res.send('Hello, world!');
+  res.json({ message: 'Hello, world!' });
 });
 
+app.use(json());
 app.use('/auth', authRouter);
-app.use('/user', userRouter);
+app.use('/users', userRouter);
+app.use('/docs', docsRouter);
 
 /**
  * 404 Error handler
@@ -35,6 +36,8 @@ app.all('*', notFoundHandler);
  */
 app.use(errorHandler);
 
-app.listen(port, () => {
-  console.log('server listening on port: ', port);
-});
+if (NODE_ENV !== 'test')
+  app.listen(PORT, () => {
+    console.log('server listening on port: ', PORT);
+  });
+else module.exports = app;
