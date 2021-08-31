@@ -1,0 +1,70 @@
+tags:
+  name: Users
+  description: Create and retrieve users
+
+paths:
+  /users:
+    post:
+      summary: User Registration
+      description: Registers a new user
+      tags: [Users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                user:
+                  type: object
+                  required:
+                    - email
+                    - password
+                    - firstName
+                    - DOB
+                  properties:
+                    email:
+                      type: string
+                      format: email
+                      description: must be unique
+                    password:
+                      type: string
+                      format: password
+                      minLength: 8
+                    firstName:
+                      type: string
+                    lastName:
+                      type: string
+                    DOB:
+                      type: string
+                      description: must be in yyyy-mm-dd format
+      responses:
+        '201':
+          description: Registered
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    enum: [true]
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        $ref: '#/components/schemas/User'
+
+        '400':
+          description: User Not added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    enum: [false]
+                  error:
+                    anyOf:
+                      - $ref: '#/components/responses/ValidationError'
+                      - $ref: '#/components/responses/InvalidParameters'
