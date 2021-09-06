@@ -3,6 +3,8 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const swaggerOptions = require('../docs/swaggerOptions');
 
+// TODO update all docs
+
 const router = express.Router();
 const swaggerSpecs = swaggerJsdoc(swaggerOptions);
 
