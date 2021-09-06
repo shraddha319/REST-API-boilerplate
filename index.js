@@ -5,8 +5,7 @@ const { json } = require('body-parser');
 
 const { PORT, NODE_ENV } = require('./config');
 const { connectDB } = require('./lib');
-const errorHandler = require('./middleware/errorHandler');
-const notFoundHandler = require('./middleware/notFoundHandler');
+const { errorHandler, notFoundHandler } = require('./middlewares');
 const userRouter = require('./routes/user.routes');
 const authRouter = require('./routes/auth.routes');
 const docsRouter = require('./routes/docs.routes');
@@ -36,8 +35,8 @@ app.all('*', notFoundHandler);
  */
 app.use(errorHandler);
 
-if (NODE_ENV !== 'test')
-  app.listen(PORT, () => {
-    console.log('server listening on port: ', PORT);
-  });
-else module.exports = app;
+const server = app.listen(PORT, () => {
+  console.log('server listening on port: ', PORT);
+});
+
+module.exports = { app, server };
