@@ -92,9 +92,14 @@ List of available endpoints:
 
 #### Auth routes:
 
+`POST /auth/login` - login user
+
 #### User routes:
 
-`POST /users` - create a user
+`POST /users` - registers a new user\
+`GET /users/id` - get existing user info by ID\
+`POST /users/id` - update existing user by ID\
+`DELETE /users/id` - delete existing user by ID
 
 ## License
 
