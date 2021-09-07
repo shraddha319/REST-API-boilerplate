@@ -6,9 +6,9 @@ const cors = require('cors');
 const { PORT, NODE_ENV } = require('./config');
 const { connectDB } = require('./lib');
 const { errorHandler, notFoundHandler } = require('./middlewares');
-const userRouter = require('./routes/user.routes');
-const authRouter = require('./routes/auth.routes');
-const docsRouter = require('./routes/docs.routes');
+const userRouter = require('./routes/users.route');
+const authRouter = require('./routes/auth.route');
+const docsRouter = require('./routes/docs.route');
 
 if (NODE_ENV !== 'test') connectDB();
 
