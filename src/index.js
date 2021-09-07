@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const { json } = require('body-parser');
-
+const cors = require('cors');
 const { PORT, NODE_ENV } = require('./config');
 const { connectDB } = require('./lib');
 const { errorHandler, notFoundHandler } = require('./middlewares');
@@ -19,6 +19,7 @@ app.get('/', (req, res) => {
 });
 
 app.use(json());
+app.use(cors());
 app.use('/auth', authRouter);
 app.use('/users', userRouter);
 app.use('/docs', docsRouter);
