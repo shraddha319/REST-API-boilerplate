@@ -12,13 +12,19 @@ const {
   getUserById,
   updateUserById,
   deleteUserById,
+  token,
 } = require('../validations/user.validation');
 
 const router = express.Router();
 
 router.route('/').post(validate(createUser, 'User'), catchAsync(postUser));
 
-router.use('/:userId', catchAsync(validateUserId), tokenVerifier);
+router.use(
+  '/:userId',
+  validate(token),
+  catchAsync(validateUserId),
+  catchAsync(tokenVerifier),
+);
 
 router
   .route('/:userId')

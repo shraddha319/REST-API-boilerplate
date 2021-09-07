@@ -10,4 +10,12 @@ const login = {
   }),
 };
 
-module.exports = { login };
+const token = {
+  headers: Joi.object()
+    .keys({
+      Authorization: Joi.string().required(),
+    })
+    .unknown(true),
+};
+
+module.exports = { login, token };
