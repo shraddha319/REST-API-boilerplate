@@ -6,7 +6,9 @@ A boilerplate for building RESTful APIs using Node.js, Express and Mongoose.
 
 - **Error Handling**: centralized error handling mechanism
 - **Authentication and Authorization**: using [JWT](https://jwt.io)
-- **NoSQL database**: uses [MongoDB](https://www.mongodb.com). Object Data Modeling and request data validation using [Mongoose](https://mongoosejs.com)
+- **NoSQL database**: [MongoDB](https://www.mongodb.com)
+- **Object Data Modeling**:using [Mongoose](https://mongoosejs.com)
+- **Validation**: using [Joi](https://github.com/sideway/joi)
 - **Testing**: unit tests using [Jest](https://jestjs.io)
 - **CORS**: Cross-Origin Resource Sharing enabled using [cors](https://github.com/expressjs/cors)
 - **API Documentation**: using [Swagger UI express](https://github.com/scottie1984/swagger-ui-express)
@@ -96,10 +98,10 @@ List of available endpoints:
 
 #### User routes:
 
-`POST /users` - registers a new user\
-`GET /users/id` - get existing user info by ID\
-`POST /users/id` - update existing user by ID\
-`DELETE /users/id` - delete existing user by ID
+`POST /users` - create user\
+`GET /users/:userId` - get user by ID\
+`POST /users/:userId` - update user by ID\
+`DELETE /users/:userId` - delete user by ID
 
 ## License
 
