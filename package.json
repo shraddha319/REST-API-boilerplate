@@ -2,16 +2,16 @@
   "name": "rest-api-boilerplate",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "jest --maxWorkers=1",
     "test:coverage": "jest --maxWorkers=1 --coverage",
     "test:watch": "jest --watch --maxWorkers=1",
-    "dev": "nodemon --delay 500ms --watch index.js",
-    "start": "node index.js",
+    "dev": "nodemon --delay 500ms --watch src/index.js",
+    "start": "node src/index.js",
     "clean": "kill -9 $(lsof -t -i:3000)",
-    "lint": "./node_modules/.bin/eslint index.js",
-    "lint:fix": "./node_modules/.bin/eslint index.js"
+    "lint": "./node_modules/.bin/eslint src/index.js",
+    "lint:fix": "./node_modules/.bin/eslint src/index.js"
   },
   "repository": {
     "type": "git",
